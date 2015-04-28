@@ -1,0 +1,9 @@
+# Uvision temp files
+*.Bak
+*.LST
+*.OBJ
+*.Opt
+
+# Compiled Files
+*.hex
+*.exe
