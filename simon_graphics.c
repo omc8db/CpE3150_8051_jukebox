@@ -1,0 +1,4 @@
+#ifndef SIMON_GRAPHICS
+#define SIMON_GRAPHICS
+
+#endif SIMON_GRAPHICS
