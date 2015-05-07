@@ -25,6 +25,7 @@ char modeSelect(void);
 void keyboardMode(void);
 void jukeboxMode(void);
 void gameMode(void);
+void delay(long millis);
 
 int main()
 {
@@ -32,7 +33,16 @@ int main()
 	P2M1 = 0x00;
 
 	//"Hello, World!" has 13 characters
+	LED1_RED = 1;
+	delay(400);
+	LED1_RED = 0;
+	delay(400);
+	LED1_RED = 1;
+	delay(400);
+	LED1_RED = 0;
+
 	uart_write("Hello, World!", 13);
+
 
 	while(1)
 	{
@@ -65,5 +75,15 @@ void jukeboxMode(void)
 
 void gameMode(void)
 {
+	return;
+}
+
+void delay(long millis)
+{
+	char j;
+	for(; millis != 0; millis--)
+	{
+		for(j = 255; j != 0; j--);
+	}
 	return;
 }

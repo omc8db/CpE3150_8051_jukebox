@@ -8,26 +8,26 @@ Header file for the Simon Board
 #ifndef SIMON_2
 #define SIMON_2
 
-#define BUZZER p1.7
+sbit BUZZER P1^.7
 
-#define LED1_RED p2.4
-#define LED2_AMB p0.6
-#define LED3_YEL p2.5
-#define LED4_YEL p0.5
-#define LED5_RED p1.6
-#define LED6_GRN p0.7
-#define LED7_GRN p2.7
-#define LED8_RED p0.4
-#define LED9_AMB p2.6
+sbit LED1_RED = P2^4;
+sbit LED2_AMB = P0^6;
+sbit LED3_YEL = P2^5;
+sbit LED4_YEL = P0^5;
+sbit LED5_RED = P1^6;
+sbit LED6_GRN = P0^7;
+sbit LED7_GRN = P2^7;
+sbit LED8_RED = P0^4;
+sbit LED9_AMB = P2^6;
 
-#define SW1 p2.0
-#define SW2 p0.2
-#define SW3 p2.1
-#define SW4 p0.1
-#define SW5 p1.4
-#define SW6 p0.3
-#define SW7 p2.3
-#define SW8 p0.0
-#define SW9 p2.2
+sbit SW1 = P2^0;
+sbit SW2 = P0^2;
+sbit SW3 = P2^1;
+sbit SW4 = P0^1;
+sbit SW5 = P1^4;
+sbit SW6 = P0^3;
+sbit SW7 = P2^3;
+sbit SW8 = P0^0;
+sbit SW9 = P2^2;
 
 #endif //SIMON_2
