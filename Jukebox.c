@@ -32,7 +32,7 @@ int main()
 	uart_init();
 	P2M1 = 0x00;
 
-	//"Hello, World!" has 13 characters
+
 	LED1_RED = 1;
 	delay(400);
 	LED1_RED = 0;
@@ -41,7 +41,8 @@ int main()
 	delay(400);
 	LED1_RED = 0;
 
-	uart_write("Hello, World!", 13);
+	//"Hello, World!" has 13 characters
+	uart_write("Hello, World!\n");
 
 
 	while(1)
@@ -60,21 +61,25 @@ int main()
 char modeSelect(void)
 {
 	//Dummy value
+	
 	return KEYBOARD_MODE;
 }
 
 void keyboardMode(void)
 {
+	uart_write("Keyboard Mode Selected\n");
 	return;
 }
 
 void jukeboxMode(void)
 {
+	uart_write("Jukebox Mode Selected\n");
 	return;
 }
 
 void gameMode(void)
 {
+	uart_write("Game Mode Selected\n");
 	return;
 }
 

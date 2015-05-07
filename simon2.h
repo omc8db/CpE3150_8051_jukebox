@@ -8,7 +8,7 @@ Header file for the Simon Board
 #ifndef SIMON_2
 #define SIMON_2
 
-sbit BUZZER P1^.7
+sbit BUZZER = P1^7;
 
 sbit LED1_RED = P2^4;
 sbit LED2_AMB = P0^6;

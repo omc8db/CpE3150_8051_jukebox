@@ -120,12 +120,13 @@ unsigned char uart_get
 {
   return SBUF;
 } // uart_get
-extern void uart_write(char* buffer, char length)
+extern void uart_write(char* buffer)
 {
   char index = 0;
-  for(index = 0; index < length; index++)
+  while(buffer[index] != '\0')
   {
     uart_transmit(buffer[index]);
+	index++;
   }
   return;
 }

@@ -49,5 +49,5 @@ extern void uart_init
   void
   );
 
-extern void uart_write(char* buffer, char length);
+extern void uart_write(char* buffer);
 #endif // _UARTH_
