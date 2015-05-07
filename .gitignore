@@ -7,3 +7,5 @@
 # Compiled Files
 *.hex
 *.exe
+*.M51
+*.lnp
