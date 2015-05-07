@@ -7,6 +7,16 @@ char globalMode;
 #define PLAYBACK_MODE 	1
 #define GAME_MODE     	2
 
+//-------------------------------------
+// Hardware Resources Allocation
+//-------------------------------------
+// Timer 0: Music
+// Timer 1: Serial
+// Interrupt 0:
+// Interrupt 1:
+// Interrupt 2:
+// Interrupt 3:
+
 // Gets the mode from the user
 // Possible outputs: KEYBOARD_MODE
 //                   PLAYBACK_MODE
@@ -32,6 +42,16 @@ int main()
 
 char modeSelect(void)
 {
-  //Dummy value
-  return KEYBOARD_MODE;
+	//Dummy value
+	return KEYBOARD_MODE;
+}
+
+void jukeboxMode(void)
+{
+	return;
+}
+
+void gameMode(void)
+{
+	return;
 }
