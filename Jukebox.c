@@ -96,6 +96,7 @@ void keyboardMode(void)
 	{
 		if(!SW1)
 			playNote(A4, 10);
+			uart_write("Playing note A440\r\n");
 		
 	}
 	return;
@@ -139,6 +140,7 @@ void timer0ISR() interrupt 1{
 
 	//Restart timer
 	TF0 = 1;
+	TR0 = 1;
 	//Return
 	return;
 }//end function timer0ISR()
@@ -149,17 +151,13 @@ void playNote(long pitch, long duration)
 	long i = 0;
 	reload_value = pitch;
 
-	//Disable existing timer settings
-	IT0 = 0;
-	TF0 = 0;
-	TR0 = 0;
-
+	TMOD = 0x01;  //Timer 0, Mode 1
 	//Preload Values
 	TH0 = pitch >> 8;
 	TL0 = pitch;
 
 	//Enable timer
-	TF0 = 1;
+	TF0 = 0;
 	IT0 = 1;
 	TR0 = 1;
 
