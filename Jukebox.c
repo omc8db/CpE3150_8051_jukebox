@@ -28,7 +28,9 @@ sbit AUX_BUZZER = P1^1;
 //                   GAME_MODE
 void gpio_init(void);
 
-//Predefined delay values for common notes
+//------------------------------------
+// Note Definitions
+//------------------------------------
 // Fclock = 7.373Mhz
 // Machine cycle time = (1 / Fclock)(2 clocks / 1 cycle ) = 2.71 x 10^-7 seconds
 
@@ -42,16 +44,64 @@ void gpio_init(void);
 #define E4 -11205
 //392 Hz
 #define G4 -9404
-
-#define C5 -7062
-
-#define E5 -5602
-
-#define G5 -4702
-
-//880Hz
+  
+#define C5 -3523     
+#define D5 -3138
+#define E5 -2796
+#define F5 -2639
+#define G5 -2351
 #define A5 -2095
+#define B5 -1866
 
+#define C6 -1761
+#define D6 -1569
+#define E6 -1398
+#define F6 -1320
+#define G6 -1176
+#define A6 -1047
+#define B6 -933
+
+
+#define REST 0
+
+
+//------------------------------------
+// Tunes stored in code memory
+//------------------------------------
+
+//Number of notes in tune 1 * 2. Used for array bounds checking
+#define TUNE_1_LENGTH 40
+
+//Length of beats in milliseconds
+//125 = 120bpm
+#define TEMPO_1 125
+
+//{note1, time1, note2, time2...}
+//times are specified in beats. Here, four beats to a quarter note
+code long TUNE_1_NOTES[] = {
+	E6, 2,
+	REST, 1,
+	E6, 1,
+	REST, 1,
+	E6, 1,
+	REST, 1,
+	C6, 1,
+	E6, 1, 
+	REST, 1,
+
+	G6, 2, 
+	REST, 2,
+	G5,2,
+	REST, 2,
+	
+	C6, 1,
+	REST, 2,
+	G5, 1,
+	REST, 2,
+	E5, 2,
+	REST, 4,
+	REST, 4
+};
 
 void keyboardMode(void);
 void jukeboxMode(void);
@@ -71,15 +121,6 @@ static long T1reload;
 void Tune1(void);
 void Tune2(void);
 
-//Number of notes in tune 1 * 2. Used for array bounds checking
-#define TUNE_1_LENGTH 10
-//Length of beats in milliseconds
-//125 = 120bpm
-#define TEMPO_1 125
-
-//{note1, time1, note2, time2...}
-//times are specified in beats
-code long TUNE_1_NOTES[] = {C4, 1, E4, 2, G4, 3, C5, 2, E5, 3};
 
 int main()
 {
