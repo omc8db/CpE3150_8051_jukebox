@@ -10,8 +10,8 @@ char global_mode;
 //-------------------------------------
 // Hardware Resources Allocation
 //-------------------------------------
-// Timer 0: Music
-// Timer 1: Serial
+// Timer 0: Main Buzzer
+// Timer 1: Serial / Aux Buzzer
 // Interrupt 0:
 // Interrupt 1:
 // Interrupt 2:
@@ -58,11 +58,14 @@ void keyboardMode(void);
 void jukeboxMode(void);
 void gameMode(void);
 void delay(long millis);
-void playNote(long pitch, long duration);
-void T0M1Delay(long cycles);
+
+void startNoteMain(long note);
+void silenceMain(void);
+
 void debounce(void);
 
-volatile long reload_value;
+static long T0reload;
+static long T1reload;
 
 int main()
 {
@@ -109,27 +112,27 @@ void keyboardMode(void)
 		{
 			LED1_RED = 0;
 			//uart_write("Playing note A440\r\n");
-			playNote(C5, 60);
+			startNoteMain(C5);
+			while(!SW1); //Wait for button to be released
+			silenceMain();
 			LED1_RED = 1;
 		}
 		if(!SW4)
 		{
 			LED4_YEL = 0;
 			//uart_write("Playing note A880\r\n");	
-			playNote(E5, 80);
+			startNoteMain(E5);
+			while(!SW4);
+			silenceMain();
 			LED4_YEL = 1;
 		}
 		if(!SW7)
 		{
 			LED7_GRN = 0;
-			playNote(G5, 100);
+			startNoteMain(G5);
+			while(!SW7);
+			silenceMain();
 			LED7_GRN = 1;
-		}
-		if(!SW2)
-		{
-			LED2_AMB = 0;
-			playNote(A4, 100);
-			LED2_AMB = 1;
 		}
 		if(!MODE_SWITCH_BUTTON)
 		{
@@ -178,7 +181,7 @@ void delay(long millis)
 	}
 	return;
 }
-/*
+
 void timer0ISR() interrupt 1{
 
 	BUZZER = ~BUZZER;
@@ -186,53 +189,35 @@ void timer0ISR() interrupt 1{
 	//Disable timer interrupt
 	TF0 = 0;
 	TR0 = 0;
-	IT0 = 0;
-	//Clear timer flags
 
 	//Preload value
-	TH0 = reload_value >> 8;
-	TL0 = reload_value;
+	TH0 = T0reload >> 8;
+	TL0 = T0reload;
 
 	//Restart timer
-	TF0 = 1;
+	TF0 = 0;
 	TR0 = 1;
 	//Return
 	return;
 }//end function timer0ISR()
-*/
-void playNote(long pitch, long duration)
-{
-	long i;
-	//Wait for note to stop
-	for(i = 0; i < duration; i++)
-	{
-		BUZZER = ~BUZZER;
-		if(!MODE_SWITCH_BUTTON)
-		{
-			//Disable timer
-			IT0 = 0;
-			TR0 = 0;
-			TF0 = 0;
-		}
-		T0M1Delay(pitch);
-	}
 
-	//Disable timer
-	IT0 = 0;
-	TR0 = 0;
+void startNoteMain(long note)
+{
+	T0reload = note;
+	TMOD = 0x01;
+	TH0 = note >> 8; //Preload note
+	TL0 = note;
+
 	TF0 = 0;
-	return;
+	ET0 = 1;         //Enable interrupt
+
+	TR0 = 1;
 }
 
-void T0M1Delay(long cycles)
+void silenceMain(void)
 {
-	TMOD = 0x01;
-	TH0 = cycles >> 8;
-	TL0 = cycles;
-	TR0 = 1;
-	while(!TF0);
 	TR0 = 0;
-	TF0 = 0;
+	ET0 = 0;
 }
 
 void debounce(void)
