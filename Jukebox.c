@@ -21,6 +21,7 @@ char global_mode;
 // Button and LED assignments
 //------------------------------------
 #define MODE_SWITCH_BUTTON SW9
+sbit AUX_BUZZER = P1^1;
 
 // Possible Modes  : KEYBOARD_MODE
 //                   PLAYBACK_MODE
@@ -61,6 +62,8 @@ void delay(long millis);
 
 void startNoteMain(long note);
 void silenceMain(void);
+void startNoteAux(long note);
+void silenceAux(void);
 
 void debounce(void);
 
@@ -144,14 +147,37 @@ void keyboardMode(void)
 
 void jukeboxMode(void)
 {
+	//This counter represents which beat we're on
+	long counter;
 	uart_write("Jukebox Mode Selected\r\n");
 	debounce();
 	while(1)
 	{
+		if(!SW4)
+		{
+			LED1_RED = 0;
+			startNoteMain(A4);
+			delay(250);
+			silenceMain();
+			startNoteMain(C4);
+			delay(250);
+			silenceMain();
+			startNoteMain(E4);
+			delay(250);
+			silenceMain();
+			startNoteMain(G4);
+			delay(250);
+			silenceMain();
+			
+		}
+	
 		if(!MODE_SWITCH_BUTTON)
 		{
 			return;
 		}
+		//Advance to the next beat
+		//counter ++;
+		//delay(TEMPO);
 	}
 	
 	return;
@@ -174,10 +200,12 @@ void gameMode(void)
 
 void delay(long millis)
 {
-	char j;
-	for(; millis != 0; millis--)
+	long i;
+	long j;
+
+	for(i = 0; i < millis; i++)
 	{
-		for(j = 255; j != 0; j--);
+		for(j = 0; j < 64; j++);
 	}
 	return;
 }
@@ -201,6 +229,27 @@ void timer0ISR() interrupt 1{
 	return;
 }//end function timer0ISR()
 
+
+void timer1ISR() interrupt 3{
+
+	AUX_BUZZER = ~AUX_BUZZER;
+	
+	//Disable timer interrupt
+	TF1 = 0;
+	TR1 = 0;
+
+	//Preload value
+	TH1 = T1reload >> 8;
+	TL1 = T1reload;
+
+	//Restart timer
+	TF1 = 0;
+	TR1 = 1;
+	//Return
+	return;
+}//end function timer0ISR()
+
+
 void startNoteMain(long note)
 {
 	T0reload = note;
@@ -219,6 +268,27 @@ void silenceMain(void)
 	TR0 = 0;
 	ET0 = 0;
 }
+
+
+void startNoteAux(long note)
+{
+	T1reload = note;
+	TMOD = 0x10;
+	TH1 = note >> 8; //Preload note
+	TL1 = note;
+
+	TF1 = 0;
+	ET1 = 1;         //Enable interrupt
+
+	TR1 = 1;
+}
+
+void silenceAux(void)
+{
+	TR1 = 0;
+	ET1 = 0;
+}
+
 
 void debounce(void)
 {
