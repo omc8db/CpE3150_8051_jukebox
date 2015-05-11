@@ -33,8 +33,8 @@ void gpio_init(void);
 
 // 440 / (Machine cycle time) = 8378 cycles
 // 50% duty cycle -> 8378 / 2 = 4189
-#define A4 4189
-#define A5 2095
+#define A4 -4189
+#define A5 -2095
 
 char modeSelect(void);
 void keyboardMode(void);
@@ -42,6 +42,7 @@ void jukeboxMode(void);
 void gameMode(void);
 void delay(long millis);
 void playNote(long pitch, long duration);
+void T0M1Delay(long cycles);
 
 volatile long reload_value;
 
@@ -50,26 +51,17 @@ int main()
 	uart_init();
 	gpio_init();
 
-	LED1_RED = 1;
-	delay(400);
-	LED1_RED = 0;
-	delay(400);
-	LED1_RED = 1;
-	delay(400);
-	LED1_RED = 0;
-
 	//"Hello, World!" has 13 characters
 	uart_write("Hello, World!\n");
 
-	global_mode = KEYBOARD_MODE;
+	//Infinite loop through all modes
+	//When the mode switch button is pressed, the function returns
+	//and the program advances to the next mode
 	while(1)
 	{
-		if(global_mode == KEYBOARD_MODE)
-			keyboardMode();
-		if(global_mode == PLAYBACK_MODE)
-			jukeboxMode();
-		if(global_mode == GAME_MODE)
-			gameMode();
+		keyboardMode();
+		jukeboxMode();
+		gameMode();
 	}
 	return 0;
 }
@@ -95,9 +87,29 @@ void keyboardMode(void)
 	while(1)
 	{
 		if(!SW1)
-			playNote(A4, 10);
-			uart_write("Playing note A440\r\n");
-		
+		{
+			LED1_RED = 0;
+			//uart_write("Playing note A440\r\n");
+			playNote(A4, 100);
+			LED1_RED = 1;
+		}
+		if(!SW4)
+		{
+			LED4_YEL = 0;
+			//uart_write("Playing note A880\r\n");	
+			playNote(A5, 100);
+			LED4_YEL = 1;
+		}
+		if(!SW7)
+		{
+			LED7_GRN = 0;
+			uart_write("Playing note D4\r\n");
+			LED7_GRN = 1;
+		}
+		if(!MODE_SWITCH_BUTTON)
+		{
+			return;
+		}
 	}
 	return;
 }
@@ -123,7 +135,7 @@ void delay(long millis)
 	}
 	return;
 }
-
+/*
 void timer0ISR() interrupt 1{
 
 	BUZZER = ~BUZZER;
@@ -144,30 +156,22 @@ void timer0ISR() interrupt 1{
 	//Return
 	return;
 }//end function timer0ISR()
-
+*/
 void playNote(long pitch, long duration)
 {
-
-	long i = 0;
-	reload_value = pitch;
-
-	TMOD = 0x01;  //Timer 0, Mode 1
-	//Preload Values
-	TH0 = pitch >> 8;
-	TL0 = pitch;
-
-	//Enable timer
-	TF0 = 0;
-	IT0 = 1;
-	TR0 = 1;
-
-	
+	long i;
 	//Wait for note to stop
 	for(i = 0; i < duration; i++)
 	{
+		BUZZER = ~BUZZER;
 		if(!MODE_SWITCH_BUTTON)
-			return;
-		delay(1);
+		{
+			//Disable timer
+			IT0 = 0;
+			TR0 = 0;
+			TF0 = 0;
+		}
+		T0M1Delay(pitch);
 	}
 
 	//Disable timer
@@ -175,4 +179,15 @@ void playNote(long pitch, long duration)
 	TR0 = 0;
 	TF0 = 0;
 	return;
+}
+
+void T0M1Delay(long cycles)
+{
+	TMOD = 0x01;
+	TH0 = cycles >> 8;
+	TL0 = cycles;
+	TR0 = 1;
+	while(!TF0);
+	TR0 = 0;
+	TF0 = 0;
 }

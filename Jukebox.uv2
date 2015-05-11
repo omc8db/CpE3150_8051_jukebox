@@ -26,7 +26,7 @@ Options 1,0,0  // Target 'Target 1'
  EnvLib ()
  EnvReg (ÿGeneric\)
  OrgReg (ÿGeneric\)
- TgStat=0
+ TgStat=9
  OutDir (.\)
  OutName (Jukebox)
  GenApp=1
