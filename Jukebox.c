@@ -33,8 +33,25 @@ void gpio_init(void);
 
 // 440 / (Machine cycle time) = 8378 cycles
 // 50% duty cycle -> 8378 / 2 = 4189
+//440 Hz
 #define A4 -4189
+//261 Hz
+#define C4 -14124
+//329 Hz
+#define E4 -11205
+//392 Hz
+#define G4 -9404
+
+#define C5 -7062
+
+#define E5 -5602
+
+#define G5 -4702
+
+//880Hz
 #define A5 -2095
+
+
 
 char modeSelect(void);
 void keyboardMode(void);
@@ -90,21 +107,27 @@ void keyboardMode(void)
 		{
 			LED1_RED = 0;
 			//uart_write("Playing note A440\r\n");
-			playNote(A4, 100);
+			playNote(C5, 60);
 			LED1_RED = 1;
 		}
 		if(!SW4)
 		{
 			LED4_YEL = 0;
 			//uart_write("Playing note A880\r\n");	
-			playNote(A5, 100);
+			playNote(E5, 80);
 			LED4_YEL = 1;
 		}
 		if(!SW7)
 		{
 			LED7_GRN = 0;
-			uart_write("Playing note D4\r\n");
+			playNote(G5, 100);
 			LED7_GRN = 1;
+		}
+		if(!SW2)
+		{
+			LED2_AMB = 0;
+			playNote(A4, 100);
+			LED2_AMB = 1;
 		}
 		if(!MODE_SWITCH_BUTTON)
 		{
