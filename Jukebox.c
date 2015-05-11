@@ -60,6 +60,7 @@ void gameMode(void);
 void delay(long millis);
 void playNote(long pitch, long duration);
 void T0M1Delay(long cycles);
+void debounce(void);
 
 volatile long reload_value;
 
@@ -69,7 +70,7 @@ int main()
 	gpio_init();
 
 	//"Hello, World!" has 13 characters
-	uart_write("Hello, World!\n");
+	uart_write("UART initialized\r\n");
 
 	//Infinite loop through all modes
 	//When the mode switch button is pressed, the function returns
@@ -100,7 +101,8 @@ char modeSelect(void)
 
 void keyboardMode(void)
 {
-	uart_write("Keyboard Mode Selected\n");
+	uart_write("Keyboard Mode Selected\r\n");
+	debounce();
 	while(1)
 	{
 		if(!SW1)
@@ -139,13 +141,31 @@ void keyboardMode(void)
 
 void jukeboxMode(void)
 {
-	uart_write("Jukebox Mode Selected\n");
+	uart_write("Jukebox Mode Selected\r\n");
+	debounce();
+	while(1)
+	{
+		if(!MODE_SWITCH_BUTTON)
+		{
+			return;
+		}
+	}
+	
 	return;
 }
 
 void gameMode(void)
 {
-	uart_write("Game Mode Selected\n");
+	uart_write("Game Mode Selected\r\n");
+	debounce();
+
+	while(1)
+	{
+		if(!MODE_SWITCH_BUTTON)
+		{
+			return;
+		}
+	}
 	return;
 }
 
@@ -214,3 +234,11 @@ void T0M1Delay(long cycles)
 	TR0 = 0;
 	TF0 = 0;
 }
+
+void debounce(void)
+{
+	delay(100);
+	while(!MODE_SWITCH_BUTTON);
+	delay(100);
+}
+
