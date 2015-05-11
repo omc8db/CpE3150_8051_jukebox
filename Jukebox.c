@@ -53,8 +53,6 @@ void gpio_init(void);
 #define A5 -2095
 
 
-
-char modeSelect(void);
 void keyboardMode(void);
 void jukeboxMode(void);
 void gameMode(void);
@@ -69,6 +67,19 @@ void debounce(void);
 
 static long T0reload;
 static long T1reload;
+
+void Tune1(void);
+void Tune2(void);
+
+//Number of notes in tune 1 * 2. Used for array bounds checking
+#define TUNE_1_LENGTH 10
+//Length of beats in milliseconds
+//125 = 120bpm
+#define TEMPO_1 125
+
+//{note1, time1, note2, time2...}
+//times are specified in beats
+code long TUNE_1_NOTES[] = {C4, 1, E4, 2, G4, 3, C5, 2, E5, 3};
 
 int main()
 {
@@ -95,14 +106,6 @@ void gpio_init(void)
 	P0M1 = 0x00;
 	P1M1 = 0x00;
 	P2M1 = 0x00;
-}
-
-char modeSelect(void)
-{
-	//Dummy value
-	
-	return KEYBOARD_MODE;
-
 }
 
 void keyboardMode(void)
@@ -148,36 +151,18 @@ void keyboardMode(void)
 void jukeboxMode(void)
 {
 	//This counter represents which beat we're on
-	long counter;
 	uart_write("Jukebox Mode Selected\r\n");
 	debounce();
 	while(1)
 	{
+		if(!SW1)
+			Tune1();
 		if(!SW4)
-		{
-			LED1_RED = 0;
-			startNoteMain(A4);
-			delay(250);
-			silenceMain();
-			startNoteMain(C4);
-			delay(250);
-			silenceMain();
-			startNoteMain(E4);
-			delay(250);
-			silenceMain();
-			startNoteMain(G4);
-			delay(250);
-			silenceMain();
-			
-		}
-	
+			Tune2();
 		if(!MODE_SWITCH_BUTTON)
 		{
 			return;
 		}
-		//Advance to the next beat
-		//counter ++;
-		//delay(TEMPO);
 	}
 	
 	return;
@@ -297,3 +282,50 @@ void debounce(void)
 	delay(100);
 }
 
+void Tune1(void)
+{
+	long counter;
+	long next_note_time;
+	long next_note_val;
+	char current_note_index;
+
+	uart_init();
+	uart_write("Playing Tune 1");
+	counter = 0;
+	current_note_index = 0;
+	next_note_val = TUNE_1_NOTES[current_note_index];
+	current_note_index++;
+	next_note_time = TUNE_1_NOTES[current_note_index] + counter;
+	
+	while(current_note_index < TUNE_1_LENGTH)
+	{
+		if(counter >= next_note_time)	
+		{
+			//Play the next note
+			if(next_note_val == 0)
+				silenceMain();
+			else
+				startNoteMain(next_note_val);
+
+			//Get the next note. Increment twice to skip over time
+			current_note_index ++;
+			next_note_val = TUNE_1_NOTES[current_note_index];
+			current_note_index ++;		
+			next_note_time = TUNE_1_NOTES[current_note_index] + counter;
+		}
+		if(!MODE_SWITCH_BUTTON)
+			goto leaveTune1;
+
+		counter++;
+		delay(TEMPO_1);
+	}
+
+leaveTune1:
+	silenceMain();
+	return;
+}
+
+void Tune2(void)
+{
+	return;
+}
