@@ -78,7 +78,7 @@ void gpio_init(void);
 
 //{note1, time1, note2, time2...}
 //times are specified in beats. Here, four beats to a quarter note
-code long TUNE_1_NOTES[] = {
+code short int TUNE_1_NOTES[] = {
 	E6, 2,
 	REST, 1,
 	E6, 1,
@@ -102,6 +102,78 @@ code long TUNE_1_NOTES[] = {
 	REST, 4,
 	REST, 4
 };
+
+code short int BANJOS_A[] = {
+	REST, 24,
+	D4, 3,
+	REST, 1,
+	D4, 3,
+	REST, 1,
+	
+	D4, 7,
+	REST, 1,
+	E4, 8,
+	D4, 3,
+	G4, 5
+	REST, 8
+
+	REST, 24,
+	D3, 3,
+	REST, 1,
+	D3, 3,
+	REST, 1,
+	
+	D3, 7,
+	REST, 1,
+	E3, 8,
+	D3, 3,
+	G3, 5
+	REST, 8,
+
+	REST, 24,
+	B4 4,
+	C5, 4,
+	D5, 8,
+	B4, 8,
+	C5, 8,
+	A4, 8,
+	B4, 8,
+	G4, 8,
+	A4, 16,
+
+	REST 32
+
+	REST, 24,
+	B4 4,
+	C5, 4,
+	D5, 8,
+	B4, 8,
+	C5, 8,
+	A4, 8,
+	B4, 8,
+	G4, 8,
+	A4, 16,
+
+	REST, 32,
+
+	REST, 24,
+	G4, 3,
+	REST, 1,
+	G4, 3,
+	REST, 1,
+	G4, 7,
+	REST, 1,
+	A4, 7,
+	REST, 1,
+	B4, 7,
+	REST, 1,
+	C5, 8,
+	D5, 8,
+	C5, 8,
+	B4, 8,
+	REST, 8,
+
+}
 
 void keyboardMode(void);
 void jukeboxMode(void);
