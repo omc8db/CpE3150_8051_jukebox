@@ -90,57 +90,26 @@
 //times are specified in beats. Here, four beats to a quarter note
 
 code short int BANJOS_A[] = {
-	REST, 24,
-	D4, 3,
-	REST, 1,
-	D4, 3,
-	REST, 1,
-	
-	D4, 7,
-	REST, 1,
-	E4, 8,
-	D4, 8,
-	REST, 8,
-
-	REST, 24,
-	D3, 3,
-	REST, 1,
-	D3, 3,
-	REST, 1,
-	
-	D3, 7,
-	REST, 1,
-	E3, 8,
-	D3, 3,
-	G3, 5,
-	REST, 8,
 
 	REST, 24,
 	B4, 4,
 	C5, 4,
+
 	D5, 8,
 	B4, 8,
 	C5, 8,
 	A4, 8,
+
 	B4, 8,
 	G4, 8,
 	A4, 16,
 
 	REST, 32,
 
-	REST, 24,
-	B4, 4,
-	C5, 4,
-	D5, 8,
-	B4, 8,
-	C5, 8,
-	A4, 8,
-	B4, 8,
-	G4, 8,
-	A4, 16,
-
 	REST, 32,
 
+	REST, 32
+/*
 	REST, 24,
 	G4, 3,
 	REST, 1,
@@ -157,7 +126,27 @@ code short int BANJOS_A[] = {
 	C5, 8,
 	B4, 8,
 	REST, 8
-
+*/
 };
 
+code short int BANJOS_B[] = {
+	REST, 32,
 
+	REST, 32,
+
+	REST, 32,
+	
+	REST, 24,
+	B3, 4,
+	C4, 4,
+
+	D4, 8,
+	B3, 8,
+	C4, 8,
+	A3, 8,
+
+	B3, 8,
+	G3, 8,
+	A3, 8,
+	E3, 8
+};
