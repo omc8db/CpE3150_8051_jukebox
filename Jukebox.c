@@ -1,6 +1,7 @@
 #include <uart.h>
 #include <reg932.h>
 #include <simon2.h>
+#include <music.h>
 
 char global_mode;
 #define KEYBOARD_MODE 	0
@@ -28,152 +29,6 @@ sbit AUX_BUZZER = P1^1;
 //                   GAME_MODE
 void gpio_init(void);
 
-//------------------------------------
-// Note Definitions
-//------------------------------------
-// Fclock = 7.373Mhz
-// Machine cycle time = (1 / Fclock)(2 clocks / 1 cycle ) = 2.71 x 10^-7 seconds
-
-// 440 / (Machine cycle time) = 8378 cycles
-// 50% duty cycle -> 8378 / 2 = 4189
-//440 Hz
-#define A4 -4189
-//261 Hz
-#define C4 -14124
-//329 Hz
-#define E4 -11205
-//392 Hz
-#define G4 -9404
-  
-#define C5 -3523     
-#define D5 -3138
-#define E5 -2796
-#define F5 -2639
-#define G5 -2351
-#define A5 -2095
-#define B5 -1866
-
-#define C6 -1761
-#define D6 -1569
-#define E6 -1398
-#define F6 -1320
-#define G6 -1176
-#define A6 -1047
-#define B6 -933
-
-
-#define REST 0
-
-
-//------------------------------------
-// Tunes stored in code memory
-//------------------------------------
-
-//Number of notes in tune 1 * 2. Used for array bounds checking
-#define TUNE_1_LENGTH 40
-
-//Length of beats in milliseconds
-//125 = 120bpm
-#define TEMPO_1 125
-
-//{note1, time1, note2, time2...}
-//times are specified in beats. Here, four beats to a quarter note
-code short int TUNE_1_NOTES[] = {
-	E6, 2,
-	REST, 1,
-	E6, 1,
-	REST, 1,
-	E6, 1,
-	REST, 1,
-	C6, 1,
-	E6, 1, 
-	REST, 1,
-
-	G6, 2, 
-	REST, 2,
-	G5,2,
-	REST, 2,
-	
-	C6, 1,
-	REST, 2,
-	G5, 1,
-	REST, 2,
-	E5, 2,
-	REST, 4,
-	REST, 4
-};
-
-code short int BANJOS_A[] = {
-	REST, 24,
-	D4, 3,
-	REST, 1,
-	D4, 3,
-	REST, 1,
-	
-	D4, 7,
-	REST, 1,
-	E4, 8,
-	D4, 3,
-	G4, 5
-	REST, 8
-
-	REST, 24,
-	D3, 3,
-	REST, 1,
-	D3, 3,
-	REST, 1,
-	
-	D3, 7,
-	REST, 1,
-	E3, 8,
-	D3, 3,
-	G3, 5
-	REST, 8,
-
-	REST, 24,
-	B4 4,
-	C5, 4,
-	D5, 8,
-	B4, 8,
-	C5, 8,
-	A4, 8,
-	B4, 8,
-	G4, 8,
-	A4, 16,
-
-	REST 32
-
-	REST, 24,
-	B4 4,
-	C5, 4,
-	D5, 8,
-	B4, 8,
-	C5, 8,
-	A4, 8,
-	B4, 8,
-	G4, 8,
-	A4, 16,
-
-	REST, 32,
-
-	REST, 24,
-	G4, 3,
-	REST, 1,
-	G4, 3,
-	REST, 1,
-	G4, 7,
-	REST, 1,
-	A4, 7,
-	REST, 1,
-	B4, 7,
-	REST, 1,
-	C5, 8,
-	D5, 8,
-	C5, 8,
-	B4, 8,
-	REST, 8,
-
-}
 
 void keyboardMode(void);
 void jukeboxMode(void);
@@ -192,7 +47,6 @@ static long T1reload;
 
 void Tune1(void);
 void Tune2(void);
-
 
 int main()
 {
@@ -397,20 +251,23 @@ void debounce(void)
 
 void Tune1(void)
 {
-	long counter;
-	long next_note_time;
-	long next_note_val;
+	short counter;
+	short next_note_time;
+	short next_note_val;
 	char current_note_index;
+	char max_note_index;
 
 	uart_init();
-	uart_write("Playing Tune 1");
+	uart_write("Playing Dueling Banjos");
 	counter = 0;
 	current_note_index = 0;
-	next_note_val = TUNE_1_NOTES[current_note_index];
+	max_note_index = sizeof(BANJOS_A) / sizeof(short);
+
+	next_note_val = BANJOS_A[current_note_index];
 	current_note_index++;
-	next_note_time = TUNE_1_NOTES[current_note_index] + counter;
+	next_note_time = BANJOS_A[current_note_index] + counter;
 	
-	while(current_note_index < TUNE_1_LENGTH)
+	while(current_note_index < max_note_index)
 	{
 		if(counter >= next_note_time)	
 		{
@@ -422,9 +279,9 @@ void Tune1(void)
 
 			//Get the next note. Increment twice to skip over time
 			current_note_index ++;
-			next_note_val = TUNE_1_NOTES[current_note_index];
+			next_note_val = BANJOS_A[current_note_index];
 			current_note_index ++;		
-			next_note_time = TUNE_1_NOTES[current_note_index] + counter;
+			next_note_time = BANJOS_A[current_note_index] + counter;
 		}
 		if(!MODE_SWITCH_BUTTON)
 			goto leaveTune1;
