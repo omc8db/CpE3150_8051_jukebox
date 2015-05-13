@@ -41,6 +41,8 @@ void silenceAux(void);
 
 void debounce(void);
 
+void display(short counter);
+
 static long T0reload;
 static long T1reload;
 
@@ -135,7 +137,6 @@ void keyboardMode(void)
 			silenceAux();
 			LED8_RED = 1;
 		}
-
 
 		if(!MODE_SWITCH_BUTTON)
 		{
@@ -348,6 +349,12 @@ void playTune(short* trackA, short* trackB, short length, char tempo)
 	{
 		if(counter >= next_noteA_time)	
 		{
+			if (!SW3)
+			{
+				LED6_GRN = 0;
+				display(counter);
+			}
+			
 			//Play the next note
 			if(next_noteA_val == 0)
 				silenceMain();
@@ -387,4 +394,27 @@ leaveTune:
 	return;
 }
 
+void display(short counter)
+{
+	
+	//if(counter == 
+	string note_letter = "E";
+	string note_number = "6";
+	
+	
+	uart_init();
+	uart_write("*******");
+	uart_write("*");
+	uart_write("  ");
+	uart_write("1");
+	uart_write("  ");
+	uart_write("*");
+	uart_write(" ");
+	uart_write(note_letter);
+	uart_write(" ");
+	uart_write(note_number);
+	uart_write(" ");
+	uart_write("*");
+	uart_write("*******");
+}
 
