@@ -89,52 +89,44 @@ void keyboardMode(void)
 			LED1_RED = 0;
 			//uart_write("Playing note A440\r\n");
 			startNoteMain(C5);
-			while(!SW1); //Wait for button to be released
-			silenceMain();
-			LED1_RED = 1;
 		}
+
 		if(!SW4)
 		{
 			LED4_YEL = 0;
 			//uart_write("Playing note A880\r\n");	
 			startNoteMain(E5);
-			while(!SW4);
-			silenceMain();
-			LED4_YEL = 1;
 		}
+
 		if(!SW7)
 		{
 			LED7_GRN = 0;
 			startNoteMain(G5);
-			while(!SW7);
-			silenceMain();
-			LED7_GRN = 1;
 		}
+
 		if(!SW2)
 		{
 			LED2_AMB = 0;
 			startNoteAux(C4);
-			while(!SW2);
-			silenceAux();
-			LED2_AMB = 1;
 		}
+
 		if(!SW5)
 		{
 			LED5_RED = 0;
 			startNoteAux(E4);
-			while(!SW5);
-			silenceAux();
-			LED5_RED = 1;
 		}
+
 		if(!SW8)
 		{
 			LED8_RED = 0;
 			startNoteAux(G4);
-			while(!SW8);
-			silenceAux();
-			LED8_RED = 1;
 		}
-
+		
+		if(!SW3)
+		{
+			silenceMain();
+			silenceAux();
+		}
 		if(!MODE_SWITCH_BUTTON)
 		{
 			return;
@@ -233,9 +225,12 @@ void timer1ISR() interrupt 3{
 void startNoteMain(long note)
 {
 	T0reload = note;
-	TMOD = 0x01;
+
+	//Timer 0, mode 1. Does not affect other timer.
+	TMOD = 0x11;
+
 	TH0 = note >> 8; //Preload note
-	TL0 = note;
+	TL0 = note;                                
 
 	TF0 = 0;
 	ET0 = 1;         //Enable interrupt
@@ -253,7 +248,9 @@ void silenceMain(void)
 void startNoteAux(long note)
 {
 	T1reload = note;
-	TMOD = 0x10;
+
+	//Timer 1, mode 1. Does not affect other timer.
+	TMOD = 0x11;
 	TH1 = note >> 8; //Preload note
 	TL1 = note;
 
