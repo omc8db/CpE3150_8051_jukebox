@@ -306,7 +306,7 @@ void Tune3(void)
 {
 	uart_init();
 	uart_write("Playing Take5\r\n");
-	playTune(SOUND_OF_SILENCE, TAKE5_B, sizeof(TAKE5_B)/sizeof(short), TEMPO_3);
+	playTune(TAKE5_B, TAKE5_A, sizeof(TAKE5_B)/sizeof(short), TEMPO_3);
 }
 
 void playTune(short* trackA, short* trackB, short length, char tempo)

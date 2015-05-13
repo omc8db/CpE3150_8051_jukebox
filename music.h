@@ -23,15 +23,18 @@
 #define	A1	-33514			
 #define	B1	-29855			
 #define	C2	-28180			
-#define	D2	-25106			
+#define	D2	-25106
+#define E2flat -23698			
 #define	E2	-22367			
 #define	F2	-21112			
 #define	G2	-18809			
-#define	A2	-16757			
+#define	A2	-16757	
+#define B2flat -15816		
 #define	B2	-14929			
 #define	C3	-14091	
 #define D3flat -13300		
 #define	D3	-12554			
+#define E3flat -11849
 #define	E3	-11184			
 #define	F3	-10556	
 #define F3Sharp -9964		
@@ -397,55 +400,103 @@ code short int MARIO_A[] = {
 #define TEMPO_3 120
 code short int TAKE5_A[] = {
 //0
-  REST, 20,
   //1
-  F3, 4,
-  A4flat, 4,
-  REST, 4, //FIRST BEAT
-  F3, 4, 
-  A4flat, 4, // third beat
-  REST, 2,
-  C3, 8, //fourth
-  E4flat, 8,
-  REST, 4,
+  E2flat, 4,
+  F3Sharp, 1,
+  REST, 1,
+  E2flat, 4, 
+  F3Sharp, 2, // third beat
+  B2flat, 4, //fourth
+  E3flat, 3,
+  REST, 1,
   
+  E2flat, 4,
+  F3Sharp, 1,
+  REST, 1,
+  E2flat, 4, 
+  F3Sharp, 2, // third beat
+  B2flat, 4, //fourth
+  E3flat, 3,
+  REST, 1,
   
-  F3, 4,
-  A4flat, 4,
-  REST, 4, //FIRST BEAT
-  F3, 4, 
-  A4flat, 4, // third beat
-  REST, 2,
-  C3, 8, //fourth
-  E4flat, 8,
-  REST, 4,
+  E2flat, 4,
+  F3Sharp, 1,
+  REST, 1,
+  E2flat, 4, 
+  F3Sharp, 2, // third beat
+  B2flat, 4, //fourth
+  E3flat, 3,
+  REST, 1,
   
-  F3, 4,
-  A4flat, 4,
-  REST, 4, //FIRST BEAT
-  F3, 4, 
-  A4flat, 4, // third beat
-  REST, 2,
-  C3, 8, //fourth
-  E4flat, 8,
-  REST, 4,
-    
-  F3, 4,
-  A4flat, 4,
-  REST, 4, //FIRST BEAT
-  F3, 4, 
-  A4flat, 4, // third beat
-  REST, 2,
-  C3, 8, //fourth
-  E4flat, 8,
-  REST, 4,  
+  E2flat, 4,
+  F3Sharp, 1,
+  REST, 1,
+  E2flat, 4, 
+  F3Sharp, 2, // third beat
+  B2flat, 4, //fourth
+  E3flat, 3,
+  REST, 1,
   
-  REST, 42
+  E2flat, 4,
+  F3Sharp, 1,
+  REST, 1,
+  E2flat, 4, 
+  F3Sharp, 2, // third beat
+  B2flat, 4, //fourth
+  E3flat, 3,
+  REST, 1,
+  
+  E2flat, 4,
+  F3Sharp, 1,
+  REST, 1,
+  E2flat, 4, 
+  F3Sharp, 2, // third beat
+  B2flat, 4, //fourth
+  E3flat, 3,
+  REST, 1,
+  
+  E2flat, 4,
+  F3Sharp, 1,
+  REST, 1,
+  E2flat, 4, 
+  F3Sharp, 2, // third beat
+  B2flat, 4, //fourth
+  E3flat, 3,
+  REST, 1,
+  
+  E2flat, 4,
+  F3Sharp, 1,
+  REST, 1,
+  E2flat, 4, 
+  F3Sharp, 2, // third beat
+  B2flat, 4, //fourth
+  E3flat, 3,
+  REST, 1,
+  
+  E2flat, 4,
+  F3Sharp, 1,
+  REST, 1,
+  E2flat, 4, 
+  F3Sharp, 2, // third beat
+  B2flat, 4, //fourth
+  E3flat, 3,
+  REST, 1,
+  
+  E2flat, 4,
+  F3Sharp, 1,
+  REST, 1,
+  E2flat, 4, 
+  F3Sharp, 2, // third beat
+  B2flat, 4, //fourth
+  E3flat, 3,
+  REST, 1,
 
   };
   
   code short int TAKE5_B[] = {
     REST, 20,
+    
+    REST, 12,
     
     B3flat, 3,
     E4flat, 1,
