@@ -282,3 +282,100 @@ code short int BANJOS_B[] = {
 //22
   REST, 32
 };
+
+#define TEMPO_2 30
+code short int TUNE_2_NOTES[] = {
+//0
+  REST, 16,
+//1
+  E4, 3, 
+  REST, 1,
+  E4, 4, 
+  REST, 4,
+  E4, 4, 
+//2
+  REST, 4,
+  C4, 4, 
+  E4, 4, 
+  REST, 4,
+  //3
+  G4, 4,
+  REST, 12,
+  //4
+  G3, 4, 
+  REST, 12,
+  //5
+  C4, 4,
+  REST, 8, 
+  G3, 4,
+  //6
+  REST, 8,
+  E3, 4, 
+  REST, 4,
+  //7
+  REST, 4,
+  A3, 4,
+  REST, 4, 
+  B3, 4,
+  //8
+  REST, 4,
+  -8000, 4, //FLAT
+  A3, 4,
+  REST, 4,
+  //9
+  G3, 6,
+  E4, 5,
+  G4, 5,
+  //10
+  A4, 4, 
+  REST, 4,
+  F4, 4, 
+  G4, 4,
+  //11
+  REST,4,
+  E4, 4,
+  REST,4,
+  C4, 4,
+  //12
+  D4, 4,
+  B3, 4,
+  REST, 8,
+  //13
+  C4, 4,
+  REST, 8, 
+  G3, 4,
+  //14
+  REST, 8,
+  E3, 4, 
+  REST, 4,
+  //15
+  REST, 4,
+  A3, 4,
+  REST, 4, 
+  B3, 4,
+  //16
+  REST, 4,
+  -8000, 4, //FLAT
+  A3, 4,
+  REST, 4,
+  //17
+  G3, 6,
+  E4, 5,
+  G4, 5,
+  //18
+  A4, 4, 
+  REST, 4,
+  F4, 4, 
+  G4, 4,
+  //19
+  REST,4,
+  E4, 4,
+  REST,4,
+  C4, 4,
+  //20
+  D4, 4,
+  B3, 4,
+  REST, 8
+  
+
+};

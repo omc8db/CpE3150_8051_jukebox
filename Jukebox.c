@@ -122,9 +122,13 @@ void keyboardMode(void)
 			startNoteAux(G4);
 		}
 		
-		if(!SW3)
+		if(SW1 && SW4 && SW7)
 		{
 			silenceMain();
+		}
+
+		if(SW2 && SW5 && SW8)
+		{
 			silenceAux();
 		}
 		if(!MODE_SWITCH_BUTTON)
@@ -345,8 +349,52 @@ leaveTune1:
 	silenceAux();
 	return;
 }
-
 void Tune2(void)
 {
+	short counter;
+
+	short next_noteA_time;
+	short next_noteA_val;
+	short current_noteA_index;
+
+	short max_note_index;
+
+	uart_init();
+	uart_write("Playing Mario Brothers");
+	counter = 0;
+	current_noteA_index = 0;
+	max_note_index = sizeof(TUNE_2_NOTES) / sizeof(short);
+
+	next_noteA_val = BANJOS_A[current_noteA_index];
+	current_noteA_index++;
+	next_noteA_time = BANJOS_A[current_noteA_index] + counter;
+	
+	while(current_noteA_index < max_note_index)
+	{
+		if(counter >= next_noteA_time)	
+		{
+			//Play the next note
+			if(next_noteA_val == 0)
+				silenceMain();
+			else
+				startNoteMain(next_noteA_val);
+
+			//Get the next note. Increment twice to skip over time
+			current_noteA_index ++;
+			next_noteA_val = TUNE_2_NOTES[current_noteA_index];
+			current_noteA_index ++;		
+			next_noteA_time = TUNE_2_NOTES[current_noteA_index] + counter;
+		}
+
+		if(!MODE_SWITCH_BUTTON)
+			goto leaveTune1;
+
+		counter++;
+		delay(TEMPO_2);
+	}
+
+leaveTune1:
+	silenceMain();
+	silenceAux();
 	return;
 }
