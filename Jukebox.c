@@ -47,6 +47,7 @@ static long T1reload;
 void Tune1(void);
 void Tune2(void);
 void Tune3(void);
+void Tune4(void);//drue1
 void playTune(short* trackA, short* trackB, short length, char tempo);
 
 int main()
@@ -158,6 +159,8 @@ void jukeboxMode(void)
 			Tune2();
 		if(!SW7)
 			Tune3();
+		if(!SW8)
+			Tune4();
 		if(!MODE_SWITCH_BUTTON)
 		{
 			return;
@@ -307,6 +310,14 @@ void Tune3(void)
 	uart_init();
 	uart_write("Playing Take5\r\n");
 	playTune(TAKE5_B, TAKE5_A, sizeof(TAKE5_B)/sizeof(short), TEMPO_3);
+}
+
+void Tune4(void)
+{
+	uart_init();
+	uart_write("Playing brinstar");
+	playTune(BRINSTAR_A, BRINSTAR_A, sizeof(BRINSTAR_A)/sizeof(short), TEMPO_1);
+	return;
 }
 
 void playTune(short* trackA, short* trackB, short length, char tempo)

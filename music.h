@@ -29,6 +29,7 @@
 #define	F2	-21112			
 #define	G2	-18809			
 #define	A2	-16757	
+#define A2Sharp -15832
 #define B2flat -15816		
 #define	B2	-14929			
 #define	C3	-14091	
@@ -52,7 +53,8 @@
 #define F4sharp 	-4982
 #define	G4	-4702			
 #define A4flat -4438	
-#define	A4	-4189		
+#define	A4	-4189
+#define A4Sharp -3958		
 #define B4flat -3954
 #define	B4	-3732			
 #define	C5	-3523			
@@ -85,6 +87,9 @@
 #define	B8	-233			
 
 #define REST 0
+
+#define     G4Sharp    -4446
+#define     F4Sharp    -4987
 
 
 //------------------------------------
@@ -567,4 +572,132 @@ code short int TAKE5_A[] = {
  {
   REST, 3000
  };
+
+ 
+
+code short int BRINSTAR_A[] =
+{
+	B3,	64,
+	C4,	64,
+	B3,	64,
+	C4,	64,
+	G4,	16,
+	D4,	16,
+	A4Sharp,	32,
+	F4,	8,
+	A4,	4,
+	B4,	4,
+	A4,	4,
+	F4,	4,
+	G4,	8,
+	D4,	8,
+	A4Sharp, 32,
+	F4,	8,
+	A4,	4,
+	B4,	4,
+	A4,	4,
+	F4,	4,
+	G4,	8,
+	D4,	8,
+	A4Sharp,	32,
+	F4,	8,
+	A4,	4,
+	B4,	4,
+	A4,	4,
+	F4,	4,
+	G4,	16,
+	D4,	32
+};
+
+/*code short int BRINSTAR_B[] = 
+{
+	G2,	6,
+	G2,	2,
+	D2,	2,
+	G2,	2,
+	G2,	6,
+	G2,	2,
+	D2,	2,
+	G2,	2,
+	A2Sharp,	6,
+	A2Sharp,	2,
+	F2,	2,
+	A2Sharp,	2,
+	A2Sharp,	6,
+	A2Sharp,	2,
+	F2,	2,
+	A2Sharp,	2,
+	A2Sharp,	6,
+	G2,	2,
+	D2,	2,
+	G2,	2,
+	G2,	6,
+	G2,	2,
+	D2,	2,
+	G2,	2,
+	A2Sharp,	6,
+	A2Sharp,	2,
+	F2,	2,
+	A2Sharp,	2,
+	A2Sharp,	6,
+	A2Sharp,	2,
+	F2,	2,
+	A2Sharp,	2,
+	G2,	6,
+	G2,	2,
+	G3,	2,
+	D3,	2,
+	G2,	6,
+	G2,	2,
+	D3,	2,
+	G2,	2,
+	A2Sharp,	6,
+	A2Sharp,	2,
+	F3,	2,
+	A2Sharp,	2,
+	A2Sharp,	6,
+	A2Sharp,	2,
+	F3,	2,
+	A2Sharp,	2,
+	G2,	6,
+	G2,	2,
+	G3,	2,
+	D3,	2,
+	G2,	6,
+	G2,	2,
+	D3,	2,
+	G2,	2,
+	A2Sharp,	6,
+	A2Sharp,	2,
+	F3,	2,
+	A2Sharp,	2,
+	A2Sharp,	6,
+	A2Sharp,	2,
+	F3,	2,
+	A2Sharp,	2,
+	G2,	6,
+	G2,	2,
+	G3,	2,
+	D3,	2,
+	G2,	6,
+	G2,	2,
+	D3,	2,
+	G2,	2,
+	A2Sharp,	6,
+	A2Sharp,	2,
+	F3,	2,
+	A2Sharp,	2,
+	A2Sharp,	6,
+	A2Sharp,	2,
+	F3,	2,
+	A2Sharp,	2,
+	G2,	6,
+	D3,	2,
+	G2,	2,
+	G2,	2,
+	G2,	6,
+	D3,	2,
+	G2,	2,
+	G2	,2
+};*/
     
