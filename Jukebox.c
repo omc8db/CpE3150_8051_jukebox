@@ -3,7 +3,6 @@
 #include <simon2.h>
 #include <music.h>
 
-char global_mode;
 #define KEYBOARD_MODE 	0
 #define PLAYBACK_MODE 	1
 #define GAME_MODE     	2
@@ -47,6 +46,7 @@ static long T1reload;
 
 void Tune1(void);
 void Tune2(void);
+void playTune(short* trackA, short* trackB, short length);
 
 int main()
 {
@@ -66,7 +66,6 @@ int main()
 	{
 		keyboardMode();
 		jukeboxMode();
-		gameMode();
 	}
 	return 0;
 }
@@ -89,48 +88,53 @@ void keyboardMode(void)
 			LED1_RED = 0;
 			//uart_write("Playing note A440\r\n");
 			startNoteMain(C5);
+			while(!SW1); //Wait for button to be released
+			silenceMain();
+			LED1_RED = 1;
 		}
-
 		if(!SW4)
 		{
 			LED4_YEL = 0;
 			//uart_write("Playing note A880\r\n");	
 			startNoteMain(E5);
+			while(!SW4);
+			silenceMain();
+			LED4_YEL = 1;
 		}
-
 		if(!SW7)
 		{
 			LED7_GRN = 0;
 			startNoteMain(G5);
+			while(!SW7);
+			silenceMain();
+			LED7_GRN = 1;
 		}
-
 		if(!SW2)
 		{
 			LED2_AMB = 0;
 			startNoteAux(C4);
+			while(!SW2);
+			silenceAux();
+			LED2_AMB = 1;
 		}
-
 		if(!SW5)
 		{
 			LED5_RED = 0;
 			startNoteAux(E4);
+			while(!SW5);
+			silenceAux();
+			LED5_RED = 1;
 		}
-
 		if(!SW8)
 		{
 			LED8_RED = 0;
 			startNoteAux(G4);
-		}
-		
-		if(SW1 && SW4 && SW7)
-		{
-			silenceMain();
+			while(!SW8);
+			silenceAux();
+			LED8_RED = 1;
 		}
 
-		if(SW2 && SW5 && SW8)
-		{
-			silenceAux();
-		}
+
 		if(!MODE_SWITCH_BUTTON)
 		{
 			return;
@@ -138,6 +142,7 @@ void keyboardMode(void)
 	}
 	return;
 }
+
 
 void jukeboxMode(void)
 {
@@ -280,6 +285,22 @@ void debounce(void)
 
 void Tune1(void)
 {
+	uart_init();
+	uart_write("Playing Dueling Banjos");
+	playTune(BANJOS_A, BANJOS_B, sizeof(BANJOS_A)/sizeof(short));
+	return;
+}
+
+void Tune2(void)
+{
+	uart_init();
+	uart_write("Playing Mario Brothers Theme");
+	playTune(MARIO_A, MARIO_A, sizeof(MARIO_A)/sizeof(short));
+	return;
+}
+
+void playTune(short* trackA, short* trackB, short length)
+{
 	short counter;
 
 	short next_noteA_time;
@@ -290,24 +311,19 @@ void Tune1(void)
 	short next_noteB_val;
 	short current_noteB_index;
 
-	short max_note_index;
-
-	uart_init();
-	uart_write("Playing Dueling Banjos");
 	counter = 0;
 	current_noteA_index = 0;
 	current_noteB_index = 0;
-	max_note_index = sizeof(BANJOS_A) / sizeof(short);
 
-	next_noteA_val = BANJOS_A[current_noteA_index];
+	next_noteA_val = trackA[current_noteA_index];
 	current_noteA_index++;
-	next_noteA_time = BANJOS_A[current_noteA_index] + counter;
+	next_noteA_time = trackA[current_noteA_index] + counter;
 
-	next_noteB_val = BANJOS_B[current_noteB_index];
+	next_noteB_val = trackB[current_noteB_index];
 	current_noteB_index++;
-	next_noteB_time = BANJOS_B[current_noteB_index] + counter;
+	next_noteB_time = trackB[current_noteB_index] + counter;
 	
-	while(current_noteA_index < max_note_index)
+	while(current_noteA_index < length)
 	{
 		if(counter >= next_noteA_time)	
 		{
@@ -319,9 +335,9 @@ void Tune1(void)
 
 			//Get the next note. Increment twice to skip over time
 			current_noteA_index ++;
-			next_noteA_val = BANJOS_A[current_noteA_index];
+			next_noteA_val = trackA[current_noteA_index];
 			current_noteA_index ++;		
-			next_noteA_time = BANJOS_A[current_noteA_index] + counter;
+			next_noteA_time = trackA[current_noteA_index] + counter;
 		}
 		if(counter >= next_noteB_time)	
 		{
@@ -333,68 +349,21 @@ void Tune1(void)
 
 			//Get the next note. Increment twice to skip over time
 			current_noteB_index ++;
-			next_noteB_val = BANJOS_B[current_noteB_index];
+			next_noteB_val = trackB[current_noteB_index];
 			current_noteB_index ++;		
-			next_noteB_time = BANJOS_B[current_noteB_index] + counter;
+			next_noteB_time = trackB[current_noteB_index] + counter;
 		}
 		if(!MODE_SWITCH_BUTTON)
-			goto leaveTune1;
+			goto leaveTune;
 
 		counter++;
 		delay(TEMPO_1);
 	}
 
-leaveTune1:
+leaveTune:
 	silenceMain();
 	silenceAux();
 	return;
 }
-void Tune2(void)
-{
-	short counter;
 
-	short next_noteA_time;
-	short next_noteA_val;
-	short current_noteA_index;
 
-	short max_note_index;
-
-	uart_init();
-	uart_write("Playing Mario Brothers");
-	counter = 0;
-	current_noteA_index = 0;
-	max_note_index = sizeof(TUNE_2_NOTES) / sizeof(short);
-
-	next_noteA_val = BANJOS_A[current_noteA_index];
-	current_noteA_index++;
-	next_noteA_time = BANJOS_A[current_noteA_index] + counter;
-	
-	while(current_noteA_index < max_note_index)
-	{
-		if(counter >= next_noteA_time)	
-		{
-			//Play the next note
-			if(next_noteA_val == 0)
-				silenceMain();
-			else
-				startNoteMain(next_noteA_val);
-
-			//Get the next note. Increment twice to skip over time
-			current_noteA_index ++;
-			next_noteA_val = TUNE_2_NOTES[current_noteA_index];
-			current_noteA_index ++;		
-			next_noteA_time = TUNE_2_NOTES[current_noteA_index] + counter;
-		}
-
-		if(!MODE_SWITCH_BUTTON)
-			goto leaveTune1;
-
-		counter++;
-		delay(TEMPO_2);
-	}
-
-leaveTune1:
-	silenceMain();
-	silenceAux();
-	return;
-}

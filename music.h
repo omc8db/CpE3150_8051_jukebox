@@ -29,12 +29,15 @@
 #define	G2	-18809			
 #define	A2	-16757			
 #define	B2	-14929			
-#define	C3	-14091			
+#define	C3	-14091	
+#define D3flat -13300		
 #define	D3	-12554			
 #define	E3	-11184			
-#define	F3	-10556			
+#define	F3	-10556	
+#define F3Sharp -9964		
 #define	G3	-9404			
-#define	A3	-8378			
+#define	A3	-8378	
+#define B3flat -7908		
 #define	B3	-7464			
 #define	C4	-7045			
 #define	D4	-6277			
@@ -284,7 +287,7 @@ code short int BANJOS_B[] = {
 };
 
 #define TEMPO_2 30
-code short int TUNE_2_NOTES[] = {
+code short int MARIO_A[] = {
 //0
   REST, 16,
 //1
@@ -319,7 +322,7 @@ code short int TUNE_2_NOTES[] = {
   B3, 4,
   //8
   REST, 4,
-  -8000, 4, //FLAT
+  B3flat, 4, //FLAT
   A3, 4,
   REST, 4,
   //9
@@ -355,7 +358,7 @@ code short int TUNE_2_NOTES[] = {
   B3, 4,
   //16
   REST, 4,
-  -8000, 4, //FLAT
+  B3flat, 4, //FLAT
   A3, 4,
   REST, 4,
   //17
@@ -375,6 +378,102 @@ code short int TUNE_2_NOTES[] = {
   //20
   D4, 4,
   B3, 4,
+  REST, 8
+  
+
+};
+
+code short int MARIO_B[] = {
+//0
+  REST, 16,
+//1
+  F3Sharp, 3, 
+  REST, 1,
+  F3Sharp, 4, 
+  REST, 4,
+  F3Sharp, 4, 
+//2
+  REST, 4,
+  F3Sharp, 4, 
+  F3Sharp, 4, 
+  REST, 4,
+  //3
+  B3, 4,
+  REST, 12,
+  //4
+  G3, 4, 
+  REST, 12,
+  //5
+  E3, 4,
+  REST, 8, 
+  C3, 4,
+  //6
+  REST, 8,
+  G2, 4, 
+  REST, 4,
+  //7
+  REST, 4,
+  C3, 4,
+  REST, 4, 
+  D3, 4,
+  //8
+  REST, 4,
+  D3flat, 4, //FLAT
+  C3, 4,
+  REST, 4,
+  //9
+  C3, 6,
+  G3, 5,
+  B3, 5,
+  //10
+  C4, 4, 
+  REST, 4,
+  A3, 4, 
+  B3, 4,
+  //11
+  REST,4,
+  A3, 4,
+  REST,4,
+  E3, 4,
+  //12
+  F3, 4,
+  D3, 4,
+  REST, 8,
+  //13
+  E3, 4,
+  REST, 8, 
+  C3, 4,
+  //14
+  REST, 8,
+  G2, 4, 
+  REST, 4,
+  //15
+  REST, 4,
+  C3, 4,
+  REST, 4, 
+  D3, 4,
+  //16
+  REST, 4,
+  D3flat, 4, //FLAT
+  C3, 4,
+  REST, 4,
+  //17
+  C3, 6,
+  G3, 5,
+  B3, 5,
+  //18
+  C4, 4, 
+  REST, 4,
+  A3, 4, 
+  G3, 4,
+  //19
+  REST,4,
+  A3, 4,
+  REST,4,
+  E3, 4,
+  //20
+  F3, 4,
+  D3, 4,
   REST, 8
   
 
