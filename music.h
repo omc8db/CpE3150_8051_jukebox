@@ -35,16 +35,22 @@
 #define	E3	-11184			
 #define	F3	-10556	
 #define F3Sharp -9964		
-#define	G3	-9404			
+#define	G3	-9404		
+#define A3flat -8877
 #define	A3	-8378	
 #define B3flat -7908		
 #define	B3	-7464			
-#define	C4	-7045			
-#define	D4	-6277			
+#define	C4	-7045		
+#define D4flat 	-6650
+#define	D4	-6277	
+#define E4flat -5924		
 #define	E4	-5592			
-#define	F4	-5278			
+#define	F4	-5278		
+#define F4sharp 	-4982
 #define	G4	-4702			
-#define	A4	-4189			
+#define A4flat -4438	
+#define	A4	-4189		
+#define B4flat -3954
 #define	B4	-3732			
 #define	C5	-3523			
 #define	D5	-3138			
@@ -383,98 +389,131 @@ code short int MARIO_A[] = {
 
 };
 
-code short int MARIO_B[] = {
+//12 ticks to a quarter note
+//4 = third of an 8th
+//12 = quarter
+//5/4 sig
+//42 = measure
+#define TEMPO_3 120
+code short int TAKE5_A[] = {
 //0
-  REST, 16,
-//1
-  F3Sharp, 3, 
-  REST, 1,
-  F3Sharp, 4, 
-  REST, 4,
-  F3Sharp, 4, 
-//2
-  REST, 4,
-  F3Sharp, 4, 
-  F3Sharp, 4, 
-  REST, 4,
-  //3
-  B3, 4,
-  REST, 12,
-  //4
-  G3, 4, 
-  REST, 12,
-  //5
-  E3, 4,
-  REST, 8, 
-  C3, 4,
-  //6
-  REST, 8,
-  G2, 4, 
-  REST, 4,
-  //7
-  REST, 4,
-  C3, 4,
-  REST, 4, 
-  D3, 4,
-  //8
-  REST, 4,
-  D3flat, 4, //FLAT
-  C3, 4,
-  REST, 4,
-  //9
-  C3, 6,
-  G3, 5,
-  B3, 5,
-  //10
-  C4, 4, 
-  REST, 4,
-  A3, 4, 
-  B3, 4,
-  //11
-  REST,4,
-  A3, 4,
-  REST,4,
-  E3, 4,
-  //12
+  REST, 20,
+  //1
   F3, 4,
-  D3, 4,
-  REST, 8,
-  //13
-  E3, 4,
-  REST, 8, 
-  C3, 4,
-  //14
-  REST, 8,
-  G2, 4, 
+  A4flat, 4,
+  REST, 4, //FIRST BEAT
+  F3, 4, 
+  A4flat, 4, // third beat
+  REST, 2,
+  C3, 8, //fourth
+  E4flat, 8,
   REST, 4,
-  //15
-  REST, 4,
-  C3, 4,
-  REST, 4, 
-  D3, 4,
-  //16
-  REST, 4,
-  D3flat, 4, //FLAT
-  C3, 4,
-  REST, 4,
-  //17
-  C3, 6,
-  G3, 5,
-  B3, 5,
-  //18
-  C4, 4, 
-  REST, 4,
-  A3, 4, 
-  G3, 4,
-  //19
-  REST,4,
-  A3, 4,
-  REST,4,
-  E3, 4,
-  //20
-  F3, 4,
-  D3, 4,
-  REST, 8
   
+  
+  F3, 4,
+  A4flat, 4,
+  REST, 4, //FIRST BEAT
+  F3, 4, 
+  A4flat, 4, // third beat
+  REST, 2,
+  C3, 8, //fourth
+  E4flat, 8,
+  REST, 4,
+  
+  F3, 4,
+  A4flat, 4,
+  REST, 4, //FIRST BEAT
+  F3, 4, 
+  A4flat, 4, // third beat
+  REST, 2,
+  C3, 8, //fourth
+  E4flat, 8,
+  REST, 4,
+    
+  F3, 4,
+  A4flat, 4,
+  REST, 4, //FIRST BEAT
+  F3, 4, 
+  A4flat, 4, // third beat
+  REST, 2,
+  C3, 8, //fourth
+  E4flat, 8,
+  REST, 4,  
+  
+  REST, 42
 
-};
+  };
+  
+  code short int TAKE5_B[] = {
+    REST, 20,
+    
+    B3flat, 3,
+    E4flat, 1,
+    F4sharp, 3,  
+    A4flat, 1, //next measure
+    A4, 2,
+    B4flat, 2,
+    A4, 2,
+    A4flat, 2, 
+    F4sharp, 4,
+    B3flat, 4,
+    D4flat, 4, //next measure
+    E4flat, 4,
+    E4flat, 8,
+    
+    F4, 1,
+    F4sharp, 1,
+    F4, 1,
+    E4flat, 1,
+    D4flat, 4, //next measure    
+    E4flat, 4,
+    E4flat, 8,
+    
+    D4flat,1, 
+    E4flat,1,
+    D4flat,1,
+    B3flat,1,
+    A3flat,4, //next measure
+    B3flat,4,
+    B3flat,8,
+    
+    B3flat, 3,
+    E4flat, 1,
+    F4sharp, 3,  
+    A4flat, 1, //next measure
+    A4, 2,
+    B4flat, 2,
+    A4, 2,
+    A4flat, 2, 
+    F4sharp, 4,
+    B3flat, 4,
+    D4flat, 4, //next measure
+    E4flat, 4,
+    E4flat, 8,
+    
+    D4flat,1, 
+    E4flat,1,
+    D4flat,1,
+    B3flat,1,
+    A3flat,4, //next measure
+    B3flat,4,
+    B3flat,8,
+    
+    F4, 1,
+    F4sharp, 1,
+    F4, 1,
+    E4flat, 1,
+    D4flat, 4, //next measure    
+    E4flat, 4,
+    E4flat, 8,
+    
+    
+    REST, 42
+    
+ };
+ 
+ const short int SOUND_OF_SILENCE[] = 
+ {
+  REST, 3000
+ };
+    

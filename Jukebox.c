@@ -46,7 +46,8 @@ static long T1reload;
 
 void Tune1(void);
 void Tune2(void);
-void playTune(short* trackA, short* trackB, short length);
+void Tune3(void);
+void playTune(short* trackA, short* trackB, short length, char tempo);
 
 int main()
 {
@@ -155,6 +156,8 @@ void jukeboxMode(void)
 			Tune1();
 		if(!SW4)
 			Tune2();
+		if(!SW7)
+			Tune3();
 		if(!MODE_SWITCH_BUTTON)
 		{
 			return;
@@ -287,7 +290,7 @@ void Tune1(void)
 {
 	uart_init();
 	uart_write("Playing Dueling Banjos");
-	playTune(BANJOS_A, BANJOS_B, sizeof(BANJOS_A)/sizeof(short));
+	playTune(BANJOS_A, BANJOS_B, sizeof(BANJOS_A)/sizeof(short), TEMPO_1);
 	return;
 }
 
@@ -295,11 +298,18 @@ void Tune2(void)
 {
 	uart_init();
 	uart_write("Playing Mario Brothers Theme");
-	playTune(MARIO_A, MARIO_A, sizeof(MARIO_A)/sizeof(short));
+	playTune(MARIO_A, MARIO_A, sizeof(MARIO_A)/sizeof(short), TEMPO_2);
 	return;
 }
 
-void playTune(short* trackA, short* trackB, short length)
+void Tune3(void)
+{
+	uart_init();
+	uart_write("Playing Take5\r\n");
+	playTune(SOUND_OF_SILENCE, TAKE5_B, sizeof(TAKE5_B)/sizeof(short), TEMPO_3);
+}
+
+void playTune(short* trackA, short* trackB, short length, char tempo)
 {
 	short counter;
 
@@ -357,7 +367,7 @@ void playTune(short* trackA, short* trackB, short length)
 			goto leaveTune;
 
 		counter++;
-		delay(TEMPO_1);
+		delay(tempo);
 	}
 
 leaveTune:
